@@ -1,0 +1,104 @@
+
+GET http://127.0.0.1:8000/api/course/main/lesson/attachments/27
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2OTAyOTk1NzEsImV4cCI6MTY5MDMwMzE3MSwibmJmIjoxNjkwMjk5NTcxLCJqdGkiOiJKbG1RU0tnbFNSb09kVDFvIiwic3ViIjoiNyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Ch7roHDHM4kGrMia51RnYs7-SBp6VZ_kDjPH1Myh3Og
+
+###
+
+POST http://127.0.0.1:8000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "hussein@gmail.com",
+    "password": "123"
+}
+
+###
+
+GET http://127.0.0.1:8000/api/courses
+
+###
+
+GET http://127.0.0.1:8000/api/student/courses/2
+
+###
+
+GET http://127.0.0.1:8000/api/courses
+
+###
+
+GET http://127.0.0.1:8000/api/account/2
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2ODk4Nzg5NzUsImV4cCI6MTY4OTg4MjU3NSwibmJmIjoxNjg5ODc4OTc1LCJqdGkiOiJtQTk1Q2NDTDgxMlpHZmhDIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6oCmO2_ljp1yitZSzmGzky5SujLZsWtDPZsgAQtzlkg
+
+###
+GET http://127.0.0.1:8000/api/preferences
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2ODk3OTMzMTksImV4cCI6MTY4OTc5NjkxOSwibmJmIjoxNjg5NzkzMzE5LCJqdGkiOiI4RkJnTVhja3JsNHpJUzZLIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.xdB--ioqUbpXI03F4j6t8FU_dQEUXSJTarcHcPPi68w
+
+###
+GET http://127.0.0.1:8000/api/student/course/2/progress
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2ODk3OTMzMTksImV4cCI6MTY4OTc5NjkxOSwibmJmIjoxNjg5NzkzMzE5LCJqdGkiOiI4RkJnTVhja3JsNHpJUzZLIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.xdB--ioqUbpXI03F4j6t8FU_dQEUXSJTarcHcPPi68w
+
+###
+GET http://127.0.0.1:8000/api/chapters/10
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2ODk3OTMzMTksImV4cCI6MTY4OTc5NjkxOSwibmJmIjoxNjg5NzkzMzE5LCJqdGkiOiI4RkJnTVhja3JsNHpJUzZLIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.xdB--ioqUbpXI03F4j6t8FU_dQEUXSJTarcHcPPi68w
+
+###
+
+POST http://127.0.0.1:8000/api/register
+Content-Type: application/json
+
+{
+    "full_name": "ali khalil",
+    "email": "hussedin@gmail.com",
+    "password": "333333"
+}
+
+###
+
+GET http://127.0.0.1:8000/api/student/dashboard
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2ODk4Nzg5NzUsImV4cCI6MTY4OTg4MjU3NSwibmJmIjoxNjg5ODc4OTc1LCJqdGkiOiJtQTk1Q2NDTDgxMlpHZmhDIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6oCmO2_ljp1yitZSzmGzky5SujLZsWtDPZsgAQtzlkg
+
+###
+
+GET http://127.0.0.1:8000/api/suggested
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2ODk4Nzg5NzUsImV4cCI6MTY4OTg4MjU3NSwibmJmIjoxNjg5ODc4OTc1LCJqdGkiOiJtQTk1Q2NDTDgxMlpHZmhDIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6oCmO2_ljp1yitZSzmGzky5SujLZsWtDPZsgAQtzlkg
+
+###
+
+GET http://127.0.0.1:8000/api/search?query=marketing
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2ODk4Nzg5NzUsImV4cCI6MTY4OTg4MjU3NSwibmJmIjoxNjg5ODc4OTc1LCJqdGkiOiJtQTk1Q2NDTDgxMlpHZmhDIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6oCmO2_ljp1yitZSzmGzky5SujLZsWtDPZsgAQtzlkg
+
+###
+
+GET http://127.0.0.1:8000/api/instructor/dashboard
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2ODk4Nzg5NzUsImV4cCI6MTY4OTg4MjU3NSwibmJmIjoxNjg5ODc4OTc1LCJqdGkiOiJtQTk1Q2NDTDgxMlpHZmhDIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6oCmO2_ljp1yitZSzmGzky5SujLZsWtDPZsgAQtzlkg
+
+###
+
+GET http://127.0.0.1:8000/api/student/course/10/progress
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2OTAxOTk2MzgsImV4cCI6MTY5MDIwMzIzOCwibmJmIjoxNjkwMTk5NjM4LCJqdGkiOiJJM0xoV2VpS3dTMVVCV3JMIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.jClh8YABLt-dufxRsKVLGkYGe5rk5OA-mw5CNGNl92c
+
+
+###
+GET http://127.0.0.1:8000/api/courses/suggested
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2OTAzODA0NjMsImV4cCI6MTY5MDM4NDA2MywibmJmIjoxNjkwMzgwNDYzLCJqdGkiOiJkMjdjdU1xYzZqR1VLdXJ1Iiwic3ViIjoiNyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.xIM8HQutpwlu7TzVetkghhj_QaNsA-fAKtvjBh5-JdQ
+###
+POST http://127.0.0.1:8000/api/courses/enroll
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2OTAzNjM0MjQsImV4cCI6MTY5MDM2NzAyNCwibmJmIjoxNjkwMzYzNDI0LCJqdGkiOiJ5ZzJjQTUzSm1CdWVZZndQIiwic3ViIjoiNyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Jb8JOk9DtYbZNw04aFAyjjt0LIeaCy_xfoVtNsU2CjQ
+
+{
+    "course_id": "9"
+}
+
+###
+GET http://127.0.0.1:8000/api/account
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2OTAzODIzMDUsImV4cCI6MTY5MDM4NTkwNSwibmJmIjoxNjkwMzgyMzA1LCJqdGkiOiJkTE9rRnZGSzROQ0pTVzlsIiwic3ViIjoiNyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.KEcwBj_CQYqlqDeo2czzidOQjCvE05vpUSDX8-xHmcA
+###
+POST http://127.0.0.1:8000/api/account/update
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2OTAzODIzMDUsImV4cCI6MTY5MDM4NTkwNSwibmJmIjoxNjkwMzgyMzA1LCJqdGkiOiJkTE9rRnZGSzROQ0pTVzlsIiwic3ViIjoiNyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.KEcwBj_CQYqlqDeo2czzidOQjCvE05vpUSDX8-xHmcA
+Content-Type: application/json
+
+{
+    "full_name": "hussin khalil",
+    "email": "hussein@gmail.com"
+}

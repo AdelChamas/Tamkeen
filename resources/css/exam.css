@@ -1,0 +1,145 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+
+
+.ex-container{
+    margin: auto;
+}
+@media (max-width: 576px) {
+    .ex-container{
+        width: 100%;
+    }
+}
+
+@media (min-width: 576px) {
+    .ex-container{
+        width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .ex-container{
+        width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .ex-container{
+        width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .ex-container{
+        width: 1140px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .ex-container{
+        width: 1320px;
+    }
+}
+
+
+.ex-btn{
+    padding: 10px;
+    background: #79c7ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.question-nb{
+    width: 50px;
+    height: 20px;
+    margin-left: 10px;
+    border: 1px solid black;
+}
+
+
+.grade span{
+    margin-right: 23px;
+}
+
+.exam-question span{
+    margin-right: 5px;
+}
+
+.question{
+    border: 1px solid #79c7ff;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+
+.question h2{
+    display: inline;
+}
+
+
+.ex-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.ex-container .btns{
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ex-container input{
+    border-radius: 2px;
+    outline: none;
+    border: 1px solid #79c7ff;
+    padding: 5px;
+}
+
+.ex-container i{
+    cursor: pointer;
+    transition: .3s;
+    border: 1px solid #79c7ff;
+    padding: 4px;
+    margin: 0 2px;
+}
+
+.ex-container i:hover{
+    color: rgb(185, 250, 218);
+}
+
+
+
+
+
+.left,
+.right{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.right{
+    min-width: 250px;
+}
+
+
+.left div,
+.right div{
+    margin-top: 10px;
+}
+
+.q-number{
+    display: inline;
+    width: 50px;
+}
+
+
+.error{
+    background: #f1a8a8;
+    padding: 15px;
+    border-radius: 5px;
+}
