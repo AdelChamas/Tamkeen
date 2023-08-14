@@ -13,7 +13,7 @@ class Chapter extends Model
 
     protected $guarded = ['id'];
 
-    public function chapters(){
+    public function course(){
         return $this->belongsTo(Course::class);
     }
 

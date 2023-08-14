@@ -12,7 +12,7 @@
             display: block !important;
             width: 100% !important;
         }
-        @media (max-width: 576px) {
+        @media (max-width: 768px) {
             #sidebar {
                 display: none;
             }

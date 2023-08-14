@@ -17,12 +17,15 @@
                 <form class="container" method="post" action="{{ route('newAssessment') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label for="title" class="form-label">{{ __('forms.title') }}</label>
+                        <label for="title" class="form-label" required>{{ __('forms.title') }}</label>
                         <input id="title" type="text" class="form-control" name="title" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3">
-                        <label for="duration" class="form-label">{{ __('forms.duration') }}</label>
+                        <label for="duration" class="form-label" required>{{ __('forms.duration') }}</label>
                         <input id="duration" type="number" name="duration" class="form-control">
+                    </div>
+                    <div class="text-muted">
+                        {{ __('info.exams') }}
                     </div>
                     <div class="ex-container">
                         <div class="btns">

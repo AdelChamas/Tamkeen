@@ -42,7 +42,7 @@
     <img src="{{ public_path('storage/assets/logo.png') }}">
     <h1>Certificate of Completion</h1>
     <p>This is to certify that</p>
-    <p><strong class="name">Hussein Khalil</strong></p>
+    <p><strong class="name">{{ $studentName }}</strong></p>
     <p>has successfully completed the course <em>{{ $courseName }}</em>.</p>
     <p class="date">on</p><strong>{{ date("Y/m/d") }}</strong>
 </div>

@@ -36,7 +36,7 @@ class NoteController extends Controller
         $chapter->note_id = $note->id;
         $chapter->save();
 
-        return redirect()->back()->with('success', 'Note created successfully.');
+        return redirect()->back()->with('success', __('success.note_inserted'));
     }
 
     public function edit($id){
@@ -50,14 +50,14 @@ class NoteController extends Controller
 
         if($note->isDirty()){
             $note->save();
-            return redirect()->back()->with('success', 'Note update successfully.');
+            return redirect()->back()->with('success', __('success.note_updated'));
         }
 
-        return redirect()->back()->with('info', 'Nothing to update');
+        return redirect()->back()->with('info', __('info.nothing_update'));
     }
 
     public function destroy($id){
         Note::destroy($id);
-        return redirect()->back()->with('success', 'Note deleted successfully.');
+        return redirect()->back()->with('success', __('success.note_deleted'));
     }
 }

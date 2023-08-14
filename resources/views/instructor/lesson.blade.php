@@ -9,16 +9,19 @@
             <div class="container">
                 <h2>{{ $lesson->title }}</h2>
                 <x-alert></x-alert>
-                <form method="post" action="{{ route("updateLesson", ['id' => $lesson->id]) }}" enctype="multipart/form-data">
+                <form method="post" action="{{ route('updateLesson', ['id' => $lesson->id]) }}" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label for="title" class="form-label">{{ __('forms.title') }}</label>
+                        <label for="title" class="form-label" required>{{ __('forms.title') }}</label>
                         <input id="title" type="text" class="form-control" name="title" value="{{ $lesson->title }}">
                     </div>
+                    <x-input-error :messages="$errors->get('title')" class="mt-2" />
+
                     <div class="mb-3">
-                        <label for="description" class="form-label">{{ __('forms.description') }}</label>
+                        <label for="description" class="form-label" required>{{ __('forms.description') }}</label>
                         <input id="description" type="text" class="form-control" name="description" value="{{ $lesson->description }}">
                     </div>
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     <div class="mb-3">
                         <video class="card-img-top" width="320" height="240" controls>
                             <source src="{{ asset('storage/' . $lesson->video) }}" type="video/mp4">
@@ -27,10 +30,12 @@
                         <label for="video" class="form-label">{{ __('forms.video') }}</label>
                         <input type="file" id="video" class="form-control" name="video">
                     </div>
+                    <x-input-error :messages="$errors->get('video')" class="mt-2" />
                     <div class="mb-3">
                         <label for="attachments" class="form-label">{{ __('forms.attachments') }}</label>
                         <input id="attachments" type="file" class="form-control" name="attachment" multiple>
                     </div>
+                    <x-input-error :messages="$errors->get('attachment')" class="mt-2" />
                     <div class="mb-3">
                         <label for="quiz" class="form-label">{{ __('forms.add_quiz') }}</label>
                         <select class="form-select" aria-label="Default select example" name="quiz" id="quiz">
@@ -40,6 +45,7 @@
                             @endforeach
                         </select>
                     </div>
+                    <x-input-error :messages="$errors->get('quiz')" class="mt-2" />
                     <button type="submit" class="btn btn-primary">{{ __('forms.update') }}</button>
                 </form>
             </div>

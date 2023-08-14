@@ -31,7 +31,11 @@
                             @else
                                 <h2 class="mb-15 wow fadeInUp" data-wow-delay=.2s>{{ __('pages.courses') }}</h2>
                             @endif
-                            <p class="wow fadeInUp" data-wow-delay=.4s>{{ __('pages.courses_desc') }}</p>
+                            @if(isset($instructor))
+                                <p class="wow fadeInUp" data-wow-delay=.4s>{{ __('pages.courses_by') }} {{ $instructor->full_name }}</p>
+                            @else
+                                <p class="wow fadeInUp" data-wow-delay=.4s>{{ __('pages.courses_desc') }}</p>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -66,16 +66,14 @@ class CourseController extends AdminController
         $form = new Form(new Course());
 
         $form->text('title');
-        $form->textarea('overview');
-        $form->list('subjects');
-        $form->list('outcomes');
-        $form->list('pre_requisits');
-        $form->textarea('about');
-        $form->textarea('learning-plan');
-        $form->number('simplicity_level');
+        $form->tmeditor('overview');
+        $form->text('subjects');
+        $form->number('price');
+        $form->tmeditor('outcomes');
+        $form->text('pre_requisites');
+        $form->tmeditor('about');
         $form->file('image');
-        $form->select('category_id');
-
+        $form->select('category_id')->options(\App\Models\Category::all()->pluck('category', 'id'));
 
         return $form;
     }

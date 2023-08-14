@@ -7,16 +7,28 @@ use App\Models\Course;
 use App\Models\Discussion;
 use App\Models\Lesson;
 
+
+use Illuminate\Support\Collection;
+
+/**
+ * Student Progress
+ * percentage shown: 10% discussions, 90% exams
+ */
 trait GetStudentProgress{
-    public static function getStudentInvolvement($course_id){
-        $involvements = 0;
+    public static function getNbMessagesSent($course_id){
         foreach (auth()->user()->coursesEnrolled as $course) {
             if ($course->id == $course_id) {
-                $involvements += $course->classes->assessments_submitted + $course->classes->discussions_involved;
+                return $course->classes->discussions_involved;
             }
         }
+    }
 
-        return $involvements;
+    public static function getSubmittedExams($course_id){
+        foreach (auth()->user()->coursesEnrolled as $course) {
+            if ($course->id == $course_id) {
+                return $course->classes->assessments_submitted;
+            }
+        }
     }
 
     public static function getTotal($assessments, $discussions){
@@ -43,9 +55,36 @@ trait GetStudentProgress{
             }
         }
 //        same exam for mutliple lessons/chapters
-//        dd(array_unique($assessments));
-        $total = sizeof($assessments) + sizeof(array_unique($discussions));
+        $assessments_ = new Collection($assessments);
+        $total = sizeof($assessments_->unique('id')) + sizeof(array_unique($discussions));
         return $total;
+    }
+
+    public static function getTotalExams($assessments){
+        foreach ($assessments as $assessment) {
+            if($assessment->count() == 0){ // delete
+                $key = array_search($assessment, $assessments);
+                if ($key !== false) {
+                    unset($assessments[$key]);
+                }
+            }
+        }
+
+        
+        return sizeof(array_unique($assessments));
+    }
+
+    public static function getTotalDiscussions($discussions){
+        foreach ($discussions as $discussion) {
+            if($discussion->count() == 0){ // delete
+                $key = array_search($discussion, $discussions);
+                if ($key !== false) {
+                    unset($discussions[$key]);
+                }
+            }
+        }
+        $d = new Collection($discussions);
+        return sizeof($d->unique('id'));
     }
 
     public static function setStatus($course_id){
@@ -56,30 +95,44 @@ trait GetStudentProgress{
         $chapters = Chapter::where('course_id', $course_id)->get();
 
 
+        /**
+         * Get lessons, chapters, discusssions of the course
+         */
         foreach ($chapters as $chapter){
-            array_push($assessments, Assessment::where('id', $chapter->assessment_id)->get());
+            array_push($assessments, Assessment::where('id', $chapter->assessment_id)->first());
             array_push($lessons, Lesson::where('chapter_id', $chapter->id)->get());
             array_push($discussions, Discussion::where('chapter_id', $chapter->id)->get());
         }
 
+        // Group assessments for each lesson
         foreach($lessons as $key){
             foreach ($key as $lesson) {
-                array_push($assessments, Assessment::where('id', $lesson->quiz_id)->get());
+                array_push($assessments, Assessment::where('id', $lesson->quiz_id)->first());
             }
         }
+
+
         foreach (auth()->user()->coursesEnrolled as $course){
             if($course->id == $course_id){
                 if($course->classes->certificate == 1){ // Issued
                     $course->classes->status = 1;
                     return;
                 }else{
-                    $total = static::getTotal($assessments, $discussions);
-                    $completed = static::getStudentInvolvement($course_id);
-                    if($total != 0){
-                        $course->classes->status = $completed / $total;
+                    $exams = static::getTotalExams($assessments);
+                    $submitted_exams = static::getSubmittedExams($course_id);
+                    if($submitted_exams >= $exams){
+                        $course->classes->status = 1;
                     }else{
-
+                        $discussions_ = static::getTotalDiscussions($discussions);
+                        $messages_sent = static::getNbMessagesSent($course_id);
+                        $involv = $messages_sent / $discussions_;
+                        if($involv > 10){
+                            $involv = 10;
+                        }
+                        $total = (($submitted_exams / $exams) * 100) + $involv;
+                        $course->classes->status = $total;
                     }
+                    
                 }
             }
         }
@@ -89,7 +142,7 @@ trait GetStudentProgress{
         static::setStatus($course_id);
         foreach (auth()->user()->coursesEnrolled as $course){
             if($course->id == $course_id){
-                return round($course->classes->status * 100, 2);
+                return round($course->classes->status, 2);
             }
         }
     }

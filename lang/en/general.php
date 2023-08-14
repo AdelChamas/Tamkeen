@@ -4,6 +4,7 @@ return [
     'instructor' => 'Instructor:',
     'assistant' => 'Assistant Instructor:',
     'course_instructors' => 'Course Instructors',
+    'certificate' => 'Issue Certificate',
     'phone' => 'Phone',
     'logout' => 'Logout',
     'courses' => 'Courses',

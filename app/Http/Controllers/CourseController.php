@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Custom\GetStudentProgress;
 use Symfony\Component\Console\Input\Input;
+use Illuminate\Support\Collection;
 
 class CourseController extends Controller
 {
@@ -52,15 +53,15 @@ class CourseController extends Controller
                     'discussions_involved' => 0
                 ]
             );
-        }
-        
-        $chapters = Chapter::where('course_id', $course_id)->get();
-        $exams = [];
-        foreach ($chapters as $chapter){
-            array_push($exams, Assessment::where('id', $chapter->assessment_id)->get());
-        }
-        foreach($exams as $exam){
-            auth()->user()->exams()->attach($exam, ['status' => 0]);
+            $chapters = Chapter::where('course_id', $course_id)->get();
+            $exams = [];
+            foreach ($chapters as $chapter){
+                array_push($exams, Assessment::where('id', $chapter->assessment_id)->get());
+            }
+            foreach($exams as $exam){
+                auth()->user()->exams()->attach($exam, ['status' => 0]);
+            }
+            return redirect(route('studyCourse', ['id' => $course_id]));
         }
         return redirect(route('studyCourse', ['id' => $course_id]));
     }
@@ -95,7 +96,7 @@ class CourseController extends Controller
 
         $course->instructors()->attach(auth()->user(), ['main' => 1]);
 
-        return redirect()->back()->with('success', 'Course Created Successfully');
+        return redirect()->back()->with('success', __('success.course_created'));
     }
 
 
@@ -152,14 +153,43 @@ class CourseController extends Controller
         $course->category_id = $request->category;
 
         if($course->isDirty()){
-            $course->save('success', 'Course Update Successfully.');
+            $course->save('success', __('success.course_updated'));
         }
-        return redirect()->back()->with('info', 'Nothing to update.');
+        return redirect()->back()->with('info', __('info.nothing_update'));
     }
-
+    
+    /**
+     * Delete the course and its video, poster, and attachments.
+     *   
+     */
     public function destroy($id){
+        $course = Course::findOrFail($id);
+        // attachment/video -> lesson -> chapter -> course
+        $chapters = $course->chapters;
+        $lessons = [];
+        foreach($chapters as $chapter){
+            $lessons[] = $chapter->lessons;
+        }
+        $files = [];
+        foreach($lessons as $lesson){
+            foreach($lesson as $l){
+                $files[] = $l->attachments;
+                $files[] = $l->poster;
+                $files[] = $l->video;
+            }
+        }
+        $files[] = $course->image;
+        foreach($files as $file){
+            if($file instanceof Collection){
+                foreach($file as $f){
+                    Storage::disk('public')->delete($f->attachment);
+                }
+            }else{
+                Storage::disk('public')->delete($file);
+            }
+        }
         Course::destroy($id);
-        return redirect()->back()->with('success', 'Course deleted successfully.');
+        return redirect()->back()->with('success', __('success.course_deleted'));
     }
 
 
@@ -173,7 +203,7 @@ class CourseController extends Controller
         foreach($course_assessments as $assessment) {
             if ($assessment->type == 2) { // Exam
                 if (auth()->user()->exams()->wherePivot('exam_id', $assessment->id)->value('status') == 0) {
-                    return redirect()->back()->with('certificate_locked', 'You need to pass all the exams before issuing the certificate');
+                    return redirect()->back()->with('certificate_locked', __('info.certificate_locked'));
                 }
             }
         }
@@ -182,7 +212,7 @@ class CourseController extends Controller
             return Certificate::generate($course_id);
         }
 
-        return redirect()->back()->with('certificate_locked', 'no certificate for this course');
+        return redirect()->back()->with('certificate_locked', __('info.no_certificate'));
     }
 
     public function addInstructor($course_id){
@@ -194,18 +224,29 @@ class CourseController extends Controller
             'course_id' => $course_id,
             'course_instructors' => $course_instructors ]);
     }
+
     public function storeInstructor(Request $request, $course_id){
         $course = Course::findOrFail($course_id);
         if($course->instructors()->where('instructor_id', $request->instructor)->exists()){
-            return redirect()->back()->with('info', 'Instructor Already Exists');
+            return redirect()->back()->with('info', __('info.instructor_exists'));
         }
         $course->instructors()->attach(User::where('id', $request->instructor)->first());
-        return redirect()->back()->with('success', 'Instructor Added');
+        return redirect()->back()->with('success', __('success.instructor_added'));
     }
 
     public function removeInstructor($course_id, $instructor_id){
         $course = Course::findOrFail($course_id);
         $course->instructors()->detach(User::where('id', $instructor_id)->first());
-        return redirect()->back()->with('success', 'Instructor Removed');
+        return redirect()->back()->with('success', __('success.instructor_removed'));
+    }
+
+
+    public function instructor($instructor_id){
+        $instructor = User::with('coursesTaught')->find($instructor_id);
+        $courses = $instructor->coursesTaught;
+        return view('courses')->with([
+            'courses' => $courses,
+            'instructor' => $instructor
+        ]);
     }
 }

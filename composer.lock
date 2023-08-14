@@ -4,8 +4,57 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1295560005e4e76a1132e67fbd8f909",
+    "content-hash": "709b7074e62f9e1b7aed82b1a764e075",
     "packages": [
+        {
+            "name": "asm-laravel-admin-ext/tmeditor",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/asmxaker/tmeditor.git",
+                "reference": "cb122044d63f9a2701a191e7fd649a7d39d482e7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/asmxaker/tmeditor/zipball/cb122044d63f9a2701a191e7fd649a7d39d482e7",
+                "reference": "cb122044d63f9a2701a191e7fd649a7d39d482e7",
+                "shasum": ""
+            },
+            "require": {
+                "encore/laravel-admin": "^1.6.0",
+                "laravel/framework": ">=5.5",
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Encore\\TMEditor\\TMEditorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Encore\\TMEditor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "asm",
+                    "email": "asm@xaker.ru"
+                }
+            ],
+            "description": "Integrate tmeditor into laravel-admin",
+            "support": {
+                "issues": "https://github.com/asmxaker/tmeditor/issues",
+                "source": "https://github.com/asmxaker/tmeditor/tree/v1.0.2"
+            },
+            "time": "2020-06-11T20:14:21+00:00"
+        },
         {
             "name": "barryvdh/laravel-dompdf",
             "version": "v2.0.1",

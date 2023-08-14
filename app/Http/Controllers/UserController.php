@@ -14,9 +14,6 @@ class UserController extends Controller
     {
         $updated = false;
 
-        // get all categories
-        // check if a category is within user preferences and not in the request
-        // remove it
         $categories = Category::all();
         foreach($categories as $category){
             if(auth()->user()->preferences()->where('category_id', $category->id)->exists() && $request->get($category->category) == null){
@@ -42,9 +39,9 @@ class UserController extends Controller
         }
 
         if ($updated) {
-            return redirect()->back()->with('success', 'Preferences Updated Successfully.');
+            return redirect()->back()->with('success', __('success.preferences_updated'));
         } else {
-            return redirect()->back()->with('info', 'No new preferences were added.');
+            return redirect()->back()->with('info', __('info.no_preferences'));
         }
     }
 
@@ -64,6 +61,8 @@ class UserController extends Controller
         $user->save();
         return redirect(route('instructorDashboard'));
     }
+
+    
     public function instructorIndex(){
         return view('instructor.dashboard')->with([
             'courses' => Course::whereHas('instructors', function ($query){

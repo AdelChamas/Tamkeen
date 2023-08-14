@@ -26,7 +26,7 @@ class NewLessonRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:200'],
             'description' => ['required', 'string', 'max:100'],
-            'video' => ['required', 'file', 'mimes:mp4,avi,mov,wmw'],
+            'video' => ['nullable', 'file', 'mimes:mp4,avi,mov,wmw'],
             'poster' => ['nullable', 'file'],
             'attachment' => ['nullable'],
             'quiz' => ['nullable', 'numeric'],

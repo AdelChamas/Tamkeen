@@ -26,14 +26,14 @@ class AssessmentController extends Controller
             'user_id' => auth()->id()
         ]);
 
-        return redirect()->back()->with('success', 'Assessment Inserted Successfully.');
+        return redirect()->back()->with('success', __('success.assessment_inserted'));
     }
 
     public function show($course_id, $exam_id){
         $user_exams = auth()->user()->exams;
         foreach ($user_exams as $exam){
             if($exam->id == $exam_id && auth()->user()->exams()->wherePivot('exam_id', $exam_id)->value('status') == 1){
-                return redirect()->back()->with('info', 'You already did the exam!');
+                return redirect()->back()->with('info', __('info.exam_submitted'));
             }
         }
         return view('student.course')->with([
@@ -56,13 +56,13 @@ class AssessmentController extends Controller
 
     public function assess(Request $request, $course_id, $exam_id){
         if(auth()->user()->exams()->wherePivot('exam_id', $exam_id)->value('status') == 1){
-            return redirect()->back()->with('info', 'You already took the exam!');
+            return redirect()->back()->with('info', __('info.exam_submitted'));
         }
         auth()->user()->coursesEnrolled()->updateExistingPivot(Course::find($course_id), ['assessments_submitted' => DB::raw('assessments_submitted + 1')]);
         auth()->user()->exams()->attach($exam_id);
         auth()->user()->exams()->updateExistingPivot($exam_id, ['status' => 1]);
         if(sizeof($request->all()) <= 2){
-            return redirect()->back()->with('info', 'You got 0');
+            return redirect()->back()->with('info', __('info.zero'));
         }
 
         $barem = [];
@@ -91,7 +91,7 @@ class AssessmentController extends Controller
 
     public function assessQuiz(Request $request, $course_id, $quiz_id){
         if(sizeof($request->all()) <= 2){
-            return redirect()->back()->with('info', 'You got 0');
+            return redirect()->back()->with('info', __('info.zero'));
         }
 
         $barem = [];

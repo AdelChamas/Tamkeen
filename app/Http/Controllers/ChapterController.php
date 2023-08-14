@@ -20,9 +20,9 @@ class ChapterController extends Controller
      */
     public function create(){
         return view('instructor.new_chapter')->with([
-            'courses' => Course::all(),
-            'assessments' => Assessment::all(),
-            'notes' => Note::all(),
+            'courses' => auth()->user()->coursesTaught,
+            'assessments' => Assessment::where('user_id', auth()->id())->get(),
+            'notes' => Note::where('user_id', auth()->id())->get(),
         ]);
     }
     /**
@@ -33,9 +33,8 @@ class ChapterController extends Controller
     public function createChapter($course_id){
        return view('instructor.new_chapter')->with([
             'course' => Course::findOrFail($course_id),
-            'assessments' => Assessment::all(),
-            'notes' => Note::all(),
-
+            'assessments' => Assessment::where('user_id', auth()->id())->get(),
+            'notes' => Note::where('user_id', auth()->id())->get(),
        ]);
     }
 
@@ -50,7 +49,7 @@ class ChapterController extends Controller
             'title' => $request->title,
             'assessment_id' => ($request->assessment) ?? NULL,
             'note_id' => ($request->note) ?? NULL,
-            'course_id' => null
+            'course_id' => $request->course
         ]);
         if(isset($request->assessment)){
             $course = Course::find($request->course);
@@ -66,7 +65,7 @@ class ChapterController extends Controller
                 }
             }
         }
-        return redirect()->back()->with('success', 'Chapter Created Successfully.');
+        return redirect()->back()->with('success', __('success.chapter_created'));
     }
 
     /**
@@ -82,7 +81,7 @@ class ChapterController extends Controller
             'note_id' => ($request->note) ?? NULL,
             'course_id' => $course_id
         ]);
-        return redirect()->back()->with('success', 'Chapter Created Successfully.');
+        return redirect()->back()->with('success', __('success.chapter_created'));
     }
 
     public function instructorIndex($course_id){
@@ -110,14 +109,14 @@ class ChapterController extends Controller
         $chapter->note_id = $request->note;
         if($chapter->isDirty()){
             $chapter->save();
-            return redirect()->back()->with('success', 'Chapter Updated Successfully.');
+            return redirect()->back()->with('success', __('success.chapter_updated'));
         }
 
-        return redirect()->back()->with('info', 'Nothing to Update.');
+        return redirect()->back()->with('info', __('info.nothing_update'));
     }
 
     public function destroy($id){
         Chapter::destroy($id);
-        return redirect()->back()->with('success', 'Chapter Deleted Successfully');
+        return redirect()->back()->with('success', __('success.chapter_deleted'));
     }
 }

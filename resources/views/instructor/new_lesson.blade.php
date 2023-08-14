@@ -18,17 +18,17 @@
                 @endif
                     @csrf
                     <div class="mb-3">
-                        <label for="title" class="form-label">{{ __('forms.title') }}</label>
+                        <label for="title" class="form-label" required>{{ __('forms.title') }}</label>
                         <input id="title" type="text" class="form-control" name="title">
                         <x-input-error class="mt-2" :messages="$errors->get('title')" />
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="form-label">{{ __('forms.description') }}</label>
+                        <label for="description" class="form-label" required>{{ __('forms.description') }}</label>
                         <input id="description" type="text" class="form-control" name="description">
                         <x-input-error class="mt-2" :messages="$errors->get('description')" />
                     </div>
                     <div class="mb-3">
-                        <label for="video" class="form-label">{{ __('forms.video') }}</label>
+                        <label for="video" class="form-label" required>{{ __('forms.video') }}</label>
                         <input type="file" id="video" class="form-control" name="video">
                         <x-input-error class="mt-2" :messages="$errors->get('video')" />
                     </div>
@@ -53,11 +53,11 @@
                     </div>
                     @isset($chapters)
                         <div class="mb-3">
-                            <label for="chapter" class="form-label">{{ __('general.chapter') }}</label>
+                            <label for="chapter" class="form-label" required>{{ __('general.chapter') }}</label>
                             <select class="form-select" aria-label="Default select example" name="chapter" id="chapter">
                                 <option selected disabled>--- {{ __('general.chapter') }} ---</option>
                                 @foreach($chapters as $chapter)
-                                    <option value="{{ $chapter->id }}">{{ $chapter->title }}</option>
+                                    <option value="{{ $chapter->id }}">{{ $chapter->title }} | {{ $chapter->course->title }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -4,6 +4,7 @@ return [
     'instructor' => 'الأستاذ: ',
     'assistant' => 'الأستاذ المساعد:',
     'course_instructors' => 'أساتذة الدورة',
+    'certificate' => 'تحميل الشهادة',
     'phone' => 'هاتف',
     'logout' => 'تسجيل الخروج',
     'courses' => 'الدورات',

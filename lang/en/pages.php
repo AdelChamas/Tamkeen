@@ -16,5 +16,6 @@ return [
     // Courses
     'courses' => 'Courses',
     'courses_desc' => 'A wide variety of courses available to start your career',
+    'courses_by' => 'Courses By: ',
     'preferences' => 'Set your learning preferences.'
 ];

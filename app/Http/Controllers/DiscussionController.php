@@ -31,7 +31,7 @@ class DiscussionController extends Controller
             'chapter_id' => $request->chapter
         ]);
 
-        return redirect()->back()->with('success', 'Discussion Started!');
+        return redirect()->back()->with('success', __('success.discussion_started'));
     }
 
     public function createDiscussion($chapter_id){
@@ -46,7 +46,7 @@ class DiscussionController extends Controller
             'chapter_id' => $chapter_id
         ]);
 
-        return redirect()->back()->with('success', 'Discussion Started!');
+        return redirect()->back()->with('success', __('success.discussion_started'));
     }
 
     public function edit($id){
@@ -59,13 +59,13 @@ class DiscussionController extends Controller
         $discussion->question = $request->question;
         if($discussion->isDirty()){
             $discussion->save();
-            return redirect()->back()->with('success', 'Discussion Updated Successfully.');
+            return redirect()->back()->with('success', __('success.discussion_updated'));
         }
-        return redirect()->back()->with('info', 'Nothing to Update.');
+        return redirect()->back()->with('info', __('info.nothing_update'));
     }
 
     public function destroy($id){
         Discussion::destroy($id);
-        return redirect()->back()->with('sucess', 'Discussion Deleted Successfully.');
+        return redirect()->back()->with('success', __('success.discussion_deleted'));
     }
 }

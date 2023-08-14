@@ -15,11 +15,11 @@
                 <form method="post" action="{{ route('updateDiscussion', ['id' => $discussion->id]) }}">
                     @csrf
                     <div class="mb-3">
-                        <label for="title" class="form-label">{{ __('forms.title') }}</label>
+                        <label for="title" class="form-label" required>{{ __('forms.title') }}</label>
                         <input type="text" id="title" class="form-control" name="title" value="{{ $discussion->title }}">
                     </div>
                     <div class="mb-3">
-                        <label for="question" class="form-label">{{ __('forms.question') }}</label>
+                        <label for="question" class="form-label" required>{{ __('forms.question') }}</label>
                         <textarea type="text" id="question" name="question" class="form-control">{{ $discussion->question }}</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">{{ __('forms.update') }}</button>

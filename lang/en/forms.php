@@ -2,6 +2,7 @@
 
 return [
     'google' => 'Continue With Google',
+    'facebook' => 'Continue With Facebook',
     'add' => 'Add',
     'create' => 'Create',
     'save' => 'Save',

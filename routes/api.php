@@ -73,7 +73,6 @@ Route::group([
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('account/{id}', [UserController::class, 'show']);
     Route::get('preferences', [UserController::class, 'preferences']);
-    Route::get('student/dashboard', [CourseController::class, 'studentDashboard']);
     Route::get('student/course/{course_id}/progress', [CourseController::class, 'studentProgress']);
     Route::get('chapters/{course_id}', [ChapterController::class, 'show']);
     Route::get('discussion/{chapter_id}', [DiscussionController::class, 'show']);

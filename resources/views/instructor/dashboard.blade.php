@@ -46,7 +46,6 @@
                         @endforeach
                         <script>
                             let courses_id = '{{ implode(',', $courses_) }}';
-                            console.log(courses_id.split(',')[0]);
                             courses_id.split(',').forEach((course_id)=>{
                                 document.getElementById('delete-' + course_id).addEventListener('click', (e)=>{
                                     e.preventDefault();

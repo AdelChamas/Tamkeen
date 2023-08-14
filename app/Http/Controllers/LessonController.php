@@ -17,7 +17,7 @@ class LessonController extends Controller
     public function create(){
         return view('instructor.new_lesson')->with([
             'chapters' => Chapter::all(),
-            'assessments' => Assessment::all()
+            'assessments' => Assessment::where('user_id', auth()->id())->get()
         ]);
     }
 
@@ -67,7 +67,7 @@ class LessonController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', __('success.lesson_insert'));
+        return redirect()->back()->with('success', __('success.lesson_inserted'));
     }
 
 
@@ -123,7 +123,7 @@ class LessonController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', __('success.lesson_insert'));
+        return redirect()->back()->with('success', __('success.lesson_inserted'));
     }
 
 
@@ -135,28 +135,31 @@ class LessonController extends Controller
     }
 
     public function update(NewLessonRequest $request, $id){
+        $dirty = false;
         $request->validated();
         $lesson = Lesson::findOrFail($id);
 
         if($request->hasFile('video')){
             $video = Storage::disk('public')->put('/courses/lessons', $request->video);
         }
+
         if($request->hasFile('attachment')){
             $attach = Storage::disk('public')->put('/courses/lessons/attachments/', $request->attachment);
             $attachment = Attachment::create([
                 'attachment' => $attach
             ]);
+            $lesson->attachments()->attach($attachment);
+            $dirty = true;
         }
 
         $lesson->title = $request->title;
         $lesson->description = $request->description;
         $lesson->video = ($video) ?? $lesson->video;
-        $lesson->attachment_id = ($attachment->id) ?? $lesson->attachment_id;
         $lesson->quiz_id = $lesson->quiz;
 
-        if($lesson->isDirty()){
+        if($lesson->isDirty() || $dirty){
             $lesson->save();
-            return redirect()->back()->with('success', __('success.lesson_update'));
+            return redirect()->back()->with('success', __('success.lesson_updated'));
         }else{
             return redirect()->back()->with('info', __('info.nothing_to_update'));
         }
@@ -173,7 +176,20 @@ class LessonController extends Controller
     }
 
     public function destroy($id){
+        $lesson = Lesson::findOrFail($id);
+        // delete video
+        Storage::disk('public')->delete($lesson->video);
+        // delete poster
+        Storage::disk('public')->delete($lesson->poster);
+        // delete attachments
+        $attachments = $lesson->attachments;
+        foreach($attachments as $attachment){
+            $lesson->attachments()->detach($attachment);
+            $attach = Attachment::find($attachment->id);
+            Storage::disk('public')->delete($attach->attachment);
+            Attachment::destroy($attachment->id);
+        }
         Lesson::destroy($id);
-        return redirect()->back()->with('success', 'Lesson Deleted Successfully.');
+        return redirect()->back()->with('success', __('success.lesson_deleted'));
     }
 }

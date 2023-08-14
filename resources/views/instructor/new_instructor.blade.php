@@ -14,7 +14,7 @@
                     <div class="row">
                             <form class="my-2"  action="{{ route('addInstructor', ['course_id' => $course_id]) }}" method="post">
                                 @csrf
-                                <select name='instructor' class='form-select'>
+                                <select name='instructor' class="form-select">
                                 @foreach($instructors as $instructor)
                                     <option value={{ $instructor->id }}>{{ $instructor->email }}</option>
                                 @endforeach

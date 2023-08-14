@@ -30,7 +30,7 @@
         referrerpolicy="no-referrer"
     />
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-
+    @vite('resources/js/main.js')
 </head>
 <body>
 <div class="min-h-screen bg-gray-100">
@@ -38,7 +38,6 @@
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
     <![endif]-->
     @include('layouts.header')
-
     <main class="mt-2">
         {{ $content }}
     </main>

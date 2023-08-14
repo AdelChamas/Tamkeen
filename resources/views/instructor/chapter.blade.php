@@ -26,7 +26,7 @@
                 <form class="pb-5" method="post" action="{{ route('updateChapter', ['id' => $chapter->id]) }}">
                     @csrf
                     <div class="mb-3">
-                        <label for="title" class="form-label">{{ __('forms.title') }}</label>
+                        <label for="title" class="form-label" required>{{ __('forms.title') }}</label>
                         <input type="text" class="form-control" name="title" id='title' value='{{ $chapter->title }}'>
                     </div>
                     <div class="mb-3">

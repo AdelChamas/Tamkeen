@@ -4,7 +4,6 @@ use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\DiscussionController;
-use App\Http\Controllers\FacebookSocialiteController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MessageController;
@@ -17,6 +16,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,8 +28,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('auth/facebook', [FacebookSocialiteController::class, 'redirectToFB'])->name('facebook');
-Route::get('callback/facebook', [FacebookSocialiteController::class, 'handleCallback']);
 
 Route::get('/lang/{lang}', function($lang){
     App::setLocale('ar');
@@ -78,6 +77,9 @@ Route::get('/search', function(){
     return view('courses')->with('courses', $search_results);
 })->name('search');
 
+
+Route::get('/courses/{instructor_id}', [CourseController::class, 'instructor'])->name('instructorCourses');
+
 Route::prefix('/student')->middleware(['auth', 'verified'])->group(function (){
     Route::get('/', [UserController::class, 'studentDashboard'])->name('studentDashboard');
     Route::get('/dashboard', [UserController::class, 'studentDashboard'])->name('studentDashboard');
@@ -103,6 +105,7 @@ Route::prefix('/student')->middleware(['auth', 'verified'])->group(function (){
 
 
     Route::post('/course/chapter/discussion/{discussion_id}/new-message', [MessageController::class, 'store'])->name('newMessage');
+    Route::post('/course/chapter/discussion/message/delete/{id}', [MessageController::class, 'destroy'])->name('deleteMessage');
 
 
     Route::get('/course/chapter/lesson/quiz/{course_id}/{quiz_id}', [AssessmentController::class, 'showQuiz'])->name('lessonQuiz');
@@ -168,7 +171,7 @@ Route::prefix('/instructor')->middleware(['auth', 'verified'])->group(function (
     Route::post('/new-lesson/{chapter_id}', [LessonController::class, 'storeLesson'])->name('newLesson');
     Route::get('/edit-lesson/{id}', [LessonController::class, 'edit'])->name('updateLesson');
     Route::post('/edit-lesson/{id}', [LessonController::class, 'update'])->name('updateLesson');
-    Route::delete('/delete-lesson/{id}', [LessonController::class, 'delete'])->name('deleteLesson');
+    Route::delete('/delete-lesson/{id}', [LessonController::class, 'destroy'])->name('deleteLesson');
 
 
     Route::get('/new-assessment/{course_id?}', [AssessmentController::class, 'create'])->name('newAssessment');
@@ -195,5 +198,8 @@ Route::prefix('/instructor')->middleware(['auth', 'verified'])->group(function (
 Route::get('courses/course/{id}', [CourseController::class, 'show'])->name('course');
 Route::get('courses/{category_id}', [CourseController::class, 'showByCategory'])->name('courseCategory');
 
+
+Route::get('/sign-in/google', [AuthenticatedSessionController::class, 'google'])->name('google');
+Route::get('/sign-in/google/redirect', [AuthenticatedSessionController::class, 'googleRedirect']);
 
 require __DIR__.'/auth.php';

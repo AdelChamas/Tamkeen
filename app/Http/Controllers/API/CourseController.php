@@ -110,12 +110,6 @@ class CourseController extends Controller{
         }
     }
 
-    public function studentDashboard(){
-        Course::whereHas('students', function($query){
-            $query->where('student_id', auth('api')->id());
-        })->get();
-    }
-
     public function studentShow($course_id){
         $chapters = Chapter::where('course_id', $course_id)->get();
         $lessons = [];

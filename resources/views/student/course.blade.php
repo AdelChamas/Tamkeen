@@ -23,8 +23,17 @@
 
 
             <div class="menu-bar">
-                <div>{{ __('general.instructor')}} {{ $course->instructors()->wherePivot('main', 1)->first()->full_name }}</div>
-                <div>{{ __('general.assistant')}} {{ $course->instructors()->wherePivot('main', 0)->first()->full_name }}</div>
+                <div>
+                    {{ __('general.instructor')}} 
+                    <a href="{{ route('instructorCourses', ['instructor_id' => $course->instructors()->wherePivot('main', 1)->first()->id]) }}">
+                        {{ $course->instructors()->wherePivot('main', 1)->first()->full_name }}
+                    </a>
+                </div>
+                <div>
+                    {{ __('general.assistant')}} 
+                    <a href="{{ route('instructorCourses', ['instructor_id' => $course->instructors()->wherePivot('main', 0)->first()->id]) }}">
+                        {{ $course->instructors()->wherePivot('main', 0)->first()->full_name }}</div>
+                    </a>
                 @foreach($chapters as $chapter)
                     <div class="menu current">
                         <li class="btn btn-primary collapsed" data-bs-toggle="collapse"
@@ -36,19 +45,7 @@
                             </svg>
                             <span>{{ $chapter->title  }}</span>
                         </li>
-                        <div class="dropdown m-1">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                @if(app()->getLocale() == null)
-                                    en
-                                @else
-                                    {{ app()->getLocale() }}                                
-                                @endif
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="{{ route('lang', ['lang' => 'ar']) }}">ar</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('lang', ['lang' => 'en']) }}">en</a></li>
-                                </ul>
-                            </div>
+                        
                         <ul class="menu-links collapse" id="chapter-{{$chapter->id}}-materials">
                             @php($lessons = App\Models\Lesson::where('chapter_id', $chapter->id)->get())
                             @foreach($lessons as $lesson)
@@ -138,16 +135,27 @@
                                     </li>
                                 </div>
                             @endforeach
-                            
                         </ul>
                     </div>
                 @endforeach
-
+                <div class="dropdown m-1">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                @if(app()->getLocale() == null)
+                                    en
+                                @else
+                                    {{ app()->getLocale() }}                                
+                                @endif
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="{{ route('lang', ['lang' => 'ar']) }}">ar</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('lang', ['lang' => 'en']) }}">en</a></li>
+                                </ul>
+                        </div>
                 <div class="bottom-content">
                     <span>{{ $progress }} %</span>
                     <progress value="{{ $progress }}" max="100"></progress>
                 </div>
-                <a href="{{ route('certificate', ['course_id' => $course->id]) }}" class="btn btn-primary my-2">Issue Certificate</a>
+                <a href="{{ route('certificate', ['course_id' => $course->id]) }}" class="btn btn-primary my-2">{{ __('general.certificate') }}</a>
             </div>
 
         </nav>
@@ -187,18 +195,28 @@
                       class="mt-2">
                     @csrf
                     <textarea name="message" class="form-control" cols="30" rows="5"
-                              placeholder="{{ __('discussion.discussion') }}"></textarea>
+                              placeholder="{{ __('discussion.discussion') }}" required></textarea>
                     <x-input-error :messages="$errors->get('message')" class="mt-2" />
                     <button class="btn btn-primary mt-2">{{ __('forms.add') }}</button>
                 </form>
                 <hr>
                 @php($messages = App\Models\Message::where('discussion_id', $discussion_->id)->get())
                 <div class="messages">
+                    @php($messages_ = [])
                     @foreach($messages as $message)
                         <div class="card my-2" id="{{ $message->sender_id }}">
+                            @if($message->sender->id == auth()->id())
+                            @php(array_push($messages_, $message->id))
+                            <form method='post' action="{{ route('deleteMessage', ['id' => $message->id]) }}" id='delete-message-{{ $message->id }}'>
+                                @csrf
+                                <button class='btn' id='delete-{{ $message->id }}'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="red" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7Zm2-4h2V8H9v9Zm4 0h2V8h-2v9Z"/></svg>
+                                </button>
+                            </form>
+                            @endif
                             <div class="card-body">
                                 <div class="author">
-                                    <img class="card-img-top" src="https://picsum.photos/200/300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 1.25a4.75 4.75 0 1 0 0 9.5a4.75 4.75 0 0 0 0-9.5ZM8.75 6a3.25 3.25 0 1 1 6.5 0a3.25 3.25 0 0 1-6.5 0ZM12 12.25c-2.313 0-4.445.526-6.024 1.414C4.42 14.54 3.25 15.866 3.25 17.5v.102c-.001 1.162-.002 2.62 1.277 3.662c.629.512 1.51.877 2.7 1.117c1.192.242 2.747.369 4.773.369s3.58-.127 4.774-.369c1.19-.24 2.07-.605 2.7-1.117c1.279-1.042 1.277-2.5 1.276-3.662V17.5c0-1.634-1.17-2.96-2.725-3.836c-1.58-.888-3.711-1.414-6.025-1.414ZM4.75 17.5c0-.851.622-1.775 1.961-2.528c1.316-.74 3.184-1.222 5.29-1.222c2.104 0 3.972.482 5.288 1.222c1.34.753 1.961 1.677 1.961 2.528c0 1.308-.04 2.044-.724 2.6c-.37.302-.99.597-2.05.811c-1.057.214-2.502.339-4.476.339c-1.974 0-3.42-.125-4.476-.339c-1.06-.214-1.68-.509-2.05-.81c-.684-.557-.724-1.293-.724-2.601Z" clip-rule="evenodd"/></svg>
                                     <div class="name-time">
                                         <h5 class="card-title">{{ $message->sender->full_name }}</h5>
                                         <div class="meta d-flex">
@@ -229,6 +247,15 @@
                             reply({{ $message->id }}, {{ $message->sender_id }})
                         }, {once: true});
                         @endforeach
+                        let messages_id = "{{ implode(',', $messages_) }}";
+                        messages_id.split(',').forEach((message_id)=>{
+                            document.getElementById('delete-' + message_id).addEventListener('click', (e)=>{
+                                e.preventDefault();
+                                if(confirm('Are you sure you want to delete the message?')){
+                                    document.forms['delete-message-' + message_id].submit();
+                                }
+                            })
+                        })
                         function reply(id, receiver) {
                             const form = document.createElement("form");
                             form.action = '{{ route('newMessage', ['discussion_id' => $discussion_->id]) }}';
@@ -260,10 +287,6 @@
                             const container = document.getElementById('reply-' + id);
                             container.appendChild(form);
                         }
-
-                        reply.addEventListener("click", () => {
-
-                        });
                     </script>
                 </div>
             @elseif(isset($exam))

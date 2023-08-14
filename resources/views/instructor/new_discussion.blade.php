@@ -18,16 +18,16 @@
                 @endif
                     @csrf
                     <div class="mb-3">
-                        <label for="title" class="form-label">{{ __('forms.title') }}</label>
+                        <label for="title" class="form-label" required>{{ __('forms.title') }}</label>
                         <input type="text" id="title" class="form-control" name="title">
                     </div>
                     <div class="mb-3">
-                        <label for="question" class="form-label">{{ __('forms.question') }}</label>
+                        <label for="question" class="form-label" required>{{ __('forms.question') }}</label>
                         <textarea type="text" id="question" name="question" class="form-control"></textarea>
                     </div>
                     @isset($chapters)
                         <div class="mb-3">
-                            <label for="chapter" class="form-label">{{ __('general.chapter') }}</label>
+                            <label for="chapter" class="form-label" required>{{ __('general.chapter') }}</label>
                             <select class="form-select" aria-label="Default select example" name="chapter" id="chapter">
                                 <option selected disabled>--- {{ __('general.chapter') }} ---</option>
                                 @foreach($chapters as $chapter)

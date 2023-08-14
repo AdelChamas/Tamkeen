@@ -13,11 +13,11 @@
                 <form name="new_course" method="post" action="{{ route('newCourse') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label for="title" class="form-label">{{ __('forms.title') }}</label>
+                        <label for="title" class="form-label" required>{{ __('forms.title') }}</label>
                         <input type="text" id="title" class="form-control" name="title">
                     </div>
                     <div class="mb-3">
-                        <label for="price" class="form-label">{{ __('forms.price') }}</label>
+                        <label for="price" class="form-label" required>{{ __('forms.price') }}</label>
                         <input type="number" id="price" name="price" class="form-control">
                         <div class="form-text">{{ __('forms.price_free') }}</div>
                     </div>
@@ -33,11 +33,11 @@
                         ></tinymce-editor>
                     </div>
                     <div class="mb-3">
-                        <label for="subjects" class="form-label">{{ __('forms.subjects') }}</label>
+                        <label for="subjects" class="form-label" required>{{ __('forms.subjects') }}</label>
                         <input type="text" name="subjects" class="form-control" id="subjects" />
                     </div>
                     <div class="mb-3">
-                        <label for="subjects" class="form-label">{{ __('forms.outcomes') }}</label>
+                        <label for="subjects" class="form-label" required>{{ __('forms.outcomes') }}</label>
                         <input type="text" name="outcomes" class="form-control" id="outcomes" />
                     </div>
                     <div class="mb-3">
@@ -57,11 +57,11 @@
                         ></tinymce-editor>
                     </div>
                     <div class="mb-3">
-                        <label for="image" class="form-label">{{ __('forms.image') }}</label>
+                        <label for="image" class="form-label" required>{{ __('forms.image') }}</label>
                         <input type="file" id="image" class="form-control" name="image">
                     </div>
                     <div class="mb-3">
-                        <label for="category" class="form-label">{{ __('forms.category') }}</label>
+                        <label for="category" class="form-label" required>{{ __('forms.category') }}</label>
                         <select class="form-select" id="category" aria-label="Default select example" name="category">
                             <option selected>Open this select menu</option>
                             @foreach($categories as $category)
