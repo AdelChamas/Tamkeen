@@ -24,11 +24,12 @@
                         <x-input-error class="mt-2" :messages="$errors->get('title')" />
                     </div>
                     <div class="mb-3">
-                        <label for="about" class="form-label" required>{{ __('general.note') }}</label>
+                        <label for="about" class="form-label">{{ __('general.note') }}</label>
                         <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-webcomponent@2/dist/tinymce-webcomponent.min.js"></script>
                         <tinymce-editor
                             menubar="false"
                             api-key="your-tiny-cloud-api-key"
+                            plugins="advlist lists"
                             toolbar="undo redo | blocks | bold italic backcolor |
                             alignleft aligncenter alignright alignjustify |
                             bullist numlist outdent indent | removeformat | help"

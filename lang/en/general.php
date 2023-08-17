@@ -17,7 +17,7 @@ return [
     'discussions' => 'Discussions',
     'messages' => 'Messages',
     'notes' => 'Notes',
-    'note' => 'note',
+    'note' => 'Note',
     'quiz' => 'Quiz',
     'exam' => 'Exam',
     'attachment' => 'Attachment',

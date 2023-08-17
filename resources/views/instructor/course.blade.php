@@ -26,6 +26,7 @@
                         <tinymce-editor
                             menubar="false"
                             api-key="your-tiny-cloud-api-key"
+                            plugins="advlist lists"
                             toolbar="undo redo | blocks | bold italic backcolor |
                             alignleft aligncenter alignright alignjustify |
                             bullist numlist outdent indent | removeformat | help"
@@ -50,6 +51,7 @@
                         <tinymce-editor
                             menubar="false"
                             api-key="your-tiny-cloud-api-key"
+                            plugins="advlist lists"
                             toolbar="undo redo | blocks | bold italic backcolor |
                             alignleft aligncenter alignright alignjustify |
                             bullist numlist outdent indent | removeformat | help"

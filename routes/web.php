@@ -152,6 +152,8 @@ Route::prefix('/instructor')->middleware(['auth', 'verified'])->group(function (
 
     Route::get('/new-note/{chapter_id}', [NoteController::class, 'create'])->name('newNote');
     Route::post('/new-note/{chapter_id}', [NoteController::class, 'store'])->name('newNote');
+    Route::get('/new-note', [NoteController::class, 'createNoChapter'])->name('newNoteNoChapter');
+    Route::post('/new-note', [NoteController::class, 'storeNoChapter'])->name('newNoteNoChapter');
     Route::get('/update-note/{id}', [NoteController::class, 'edit'])->name('updateNote');
     Route::post('/update-note/{id}', [NoteController::class, 'update'])->name('updateNote');
     Route::delete('/delete-note/{id}', [NoteController::class, 'destroy'])->name('deleteNote');

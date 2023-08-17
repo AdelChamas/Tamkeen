@@ -25,6 +25,11 @@ class NoteController extends Controller
         return view('instructor.new_note')->with('chapter', Chapter::findOrFail($chapter_id));
     }
 
+    
+    public function createNoChapter(){
+        return view('instructor.new_note')->with('chapters', Chapter::all());
+    }
+
     public function store(NewNoteRequest $request, $chapter_id){
         $request->validated();
         $chapter = Chapter::findOrFail($chapter_id);
@@ -38,6 +43,21 @@ class NoteController extends Controller
 
         return redirect()->back()->with('success', __('success.note_inserted'));
     }
+
+    public function storeNoChapter(NewNoteRequest $request){
+        $request->validated();
+        $chapter = Chapter::findOrFail($request->chapter);
+        $note = Note::create([
+            'title' => $request->title,
+            'note' => clean($request->note),
+            'user_id' => auth()->id()
+        ]);
+        $chapter->note_id = $note->id;
+        $chapter->save();
+
+        return redirect()->back()->with('success', __('success.note_inserted'));
+    }
+
 
     public function edit($id){
         return view('instructor.note')->with('note', Note::findOrFail($id));

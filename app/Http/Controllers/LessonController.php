@@ -55,7 +55,7 @@ class LessonController extends Controller
             'video' => $video,
             'poster' => ($poster) ?? null,
             'chapter_id' => $chapter_id,
-            'quiz_id' => $data['quiz'],
+            'quiz_id' => ($data['quiz']) ?? null,
         ]);
 
         if (!empty($attachments)) {
@@ -107,7 +107,7 @@ class LessonController extends Controller
             'video' => $video,
             'poster' => ($poster) ?? NULL,
             'chapter_id' => ($request->chapter) ?? NULL,
-            'quiz_id' => $request->quiz,
+            'quiz_id' => ($request->quiz) ?? NULL,
         ]);
 
         if (!empty($attachments)) {

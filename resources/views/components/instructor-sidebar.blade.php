@@ -60,6 +60,7 @@
                     <li><a href="{{ route('newChapterNoCourse') }}" class="link-dark d-inline-flex text-decoration-none rounded">{{ __('instructor.new_chapter') }}</a></li>
                     <li><a href="{{ route('newLessonNoChapter') }}" class="link-dark d-inline-flex text-decoration-none rounded">{{ __('instructor.new_lesson') }}</a></li>
                     <li><a href="{{ route('newDiscussionNoChapter') }}" class="link-dark d-inline-flex text-decoration-none rounded">{{ __('instructor.new_discussion') }}</a></li>
+                    <li><a href="{{ route('newNoteNoChapter') }}" class="link-dark d-inline-flex text-decoration-none rounded">{{ __('instructor.new_note') }}</a></li>
                 </ul>
             </div>
         </li>

@@ -29,11 +29,14 @@
                         {{ $course->instructors()->wherePivot('main', 1)->first()->full_name }}
                     </a>
                 </div>
-                <div>
+                @if(isset($course->instructors()->wherePivot('main', 0)->first()->id))
                     {{ __('general.assistant')}} 
                     <a href="{{ route('instructorCourses', ['instructor_id' => $course->instructors()->wherePivot('main', 0)->first()->id]) }}">
                         {{ $course->instructors()->wherePivot('main', 0)->first()->full_name }}</div>
                     </a>
+                @endif
+                <div>
+
                 @foreach($chapters as $chapter)
                     <div class="menu current">
                         <li class="btn btn-primary collapsed" data-bs-toggle="collapse"
@@ -191,8 +194,8 @@
                 </video>
             @elseif(isset($discussion_))
                 <div class="text">{{ $discussion_->title }}</div>
-                <form action="{{ route('newMessage', ['discussion_id' => $discussion_->id]) }}" method="post"
-                      class="mt-2">
+                <div class='my-2'>{{ $discussion_->question }}</div>
+                <form action="{{ route('newMessage', ['discussion_id' => $discussion_->id]) }}" method="post" class="mt-2">
                     @csrf
                     <textarea name="message" class="form-control" cols="30" rows="5"
                               placeholder="{{ __('discussion.discussion') }}" required></textarea>

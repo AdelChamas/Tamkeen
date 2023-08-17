@@ -201,9 +201,11 @@ class CourseController extends Controller
             $course_assessments[] = Assessment::where('id', $chapter->assessment_id)->first();
         }
         foreach($course_assessments as $assessment) {
-            if ($assessment->type == 2) { // Exam
-                if (auth()->user()->exams()->wherePivot('exam_id', $assessment->id)->value('status') == 0) {
-                    return redirect()->back()->with('certificate_locked', __('info.certificate_locked'));
+            if(! is_null($assessment)){
+                if ($assessment->type == 2) { // Exam
+                    if (auth()->user()->exams()->wherePivot('exam_id', $assessment->id)->value('status') == 0) {
+                        return redirect()->back()->with('certificate_locked', __('info.certificate_locked'));
+                    }
                 }
             }
         }

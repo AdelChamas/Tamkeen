@@ -62,6 +62,9 @@ trait GetStudentProgress{
 
     public static function getTotalExams($assessments){
         foreach ($assessments as $assessment) {
+            if(is_null($assessment)){
+                continue;
+            }
             if($assessment->count() == 0){ // delete
                 $key = array_search($assessment, $assessments);
                 if ($key !== false) {
@@ -69,8 +72,6 @@ trait GetStudentProgress{
                 }
             }
         }
-
-        
         return sizeof(array_unique($assessments));
     }
 
@@ -125,12 +126,15 @@ trait GetStudentProgress{
                     }else{
                         $discussions_ = static::getTotalDiscussions($discussions);
                         $messages_sent = static::getNbMessagesSent($course_id);
-                        $involv = $messages_sent / $discussions_;
-                        if($involv > 10){
-                            $involv = 10;
+                        if($discussions_ > 0){
+                            $involv = $messages_sent / $discussions_;
+                            if($involv > 10){
+                                $involv = 10;
+                            }
+                            $total = (($submitted_exams / $exams) * 100) + $involv;
+                            $course->classes->status = $total;
                         }
-                        $total = (($submitted_exams / $exams) * 100) + $involv;
-                        $course->classes->status = $total;
+                        
                     }
                     
                 }
