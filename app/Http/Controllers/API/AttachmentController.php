@@ -12,6 +12,6 @@ class AttachmentController extends Controller{
 
 
     public function show($lesson_id){
-        return Lesson::findOrFail($lesson_id)->attachments();
+        return Lesson::findOrFail($lesson_id)->attachments;
     }
 }
